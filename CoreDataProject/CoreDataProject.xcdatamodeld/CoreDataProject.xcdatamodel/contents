@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Album" representedClassName="Album" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="singer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Singer" inverseName="album" inverseEntity="Singer"/>
+    </entity>
+    <entity name="Singer" representedClassName="Singer" syncable="YES">
+        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="singerCode" optional="YES" attributeType="String"/>
+        <relationship name="album" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Album" inverseName="singer" inverseEntity="Album"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="singerCode"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+</model>
