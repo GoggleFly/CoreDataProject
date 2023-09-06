@@ -11,11 +11,20 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     
-    @State private var lastNameFilter = "A"
+    @State private var lastNameFilter = "I"
+    
+    private let sortDescriptors: [SortDescriptor<Singer>] = [
+        SortDescriptor(\.lastName),
+        SortDescriptor(\.firstName, order: .reverse)
+    ]
     
     var body: some View {
         VStack {
-            FilteredList(filterKey: "lastName", filterValue: lastNameFilter) { (singer: Singer) in
+            FilteredList(
+                predicate: .containsCaseInsensitive,
+                filterKey: "lastName", filterValue: lastNameFilter,
+                sortDescriptors: sortDescriptors
+            ) { (singer: Singer) in
                 Section("\(singer.wrappedFirstName) \(singer.wrappedLastName)") {
                     ForEach(singer.albumArray, id: \.self) { album in
                         Text(album.wrappedName)
@@ -62,12 +71,12 @@ struct ContentView: View {
                 try? moc.save()
             }
             
-            Button("Show A") {
+            Button("Contains A") {
                 lastNameFilter = "A"
             }
             
-            Button("Show S") {
-                lastNameFilter = "S"
+            Button("Contains I") {
+                lastNameFilter = "I"
             }
         }
     }
